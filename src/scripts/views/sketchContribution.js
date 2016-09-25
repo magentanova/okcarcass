@@ -1,6 +1,6 @@
 import React from 'react'
 import ACTIONS from '../actions'
-import {rainbowColor} from '../utils'
+import {rainbowColor, randRange} from '../utils'
 import Timer from './timer'
 import WriteForm from './writeForm'
 import OKAlert from './OKAlert'
@@ -48,6 +48,8 @@ const StorySoFar = React.createClass({
 
 const Contribution = React.createClass({
 
+	randomSeed: randRange(0,10),
+
 	getInitialState: function() {
 		return {
 			authorShowing: false,
@@ -86,7 +88,13 @@ const Contribution = React.createClass({
 	 	}
 
 	 	return (
-	 		<span onMouseEnter={this._showAuthor} onMouseMove={this._showAuthor} onMouseLeave={this._hideAuthor} className="contribution" style={{color: rainbowColor(this.props.model.get('index'),.6)}}> 
+	 		<span 
+	 			onMouseEnter={this._showAuthor} 
+	 			onMouseMove={this._showAuthor} 
+	 			onMouseLeave={this._hideAuthor} 
+	 			className="contribution" 
+	 			style={{color: rainbowColor(this.props.model.get('index'),.6,this.randomSeed)}}
+	 			> 
 	 			{this.props.model.get('text')} 
 	 			<span style={styleObj} className="attribution">{this.props.model.get('author')}</span>
 	 		</span>
