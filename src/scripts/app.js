@@ -12,7 +12,8 @@ const app = function() {
 			"timedSketches/admin": "showSketchesAdmin",
 			"timedSketches/:time": "showSketchesByTime",
 			"timedSketches/:time/create": "createSketch",
-			"timedSketches/:sketchId/contribute": "contributeToSketch"
+			"timedSketches/:sketchId/contribute": "contributeToSketch",
+			"*default": "redirect"
 		},
 
 		createSketch: function(timerVal) {
@@ -21,6 +22,10 @@ const app = function() {
 
 		contributeToSketch: function(sketchId) {
 			ReactDOM.render(<ControllerView view="contributeToSketch" sketchId={sketchId} />,document.querySelector('.container'))
+		},
+
+		redirect: function() {
+			location.hash = "sketches"
 		},
 
 		showSketchTimes: function() {
