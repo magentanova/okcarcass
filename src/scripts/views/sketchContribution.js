@@ -1,7 +1,9 @@
 import React from 'react'
 import ACTIONS from '../actions'
+import {rainbowColor} from '../utils'
 import Timer from './timer'
 import WriteForm from './writeForm'
+
 
 const SketchContribution = React.createClass({
 
@@ -27,15 +29,68 @@ const SketchContribution = React.createClass({
 
 
 const StorySoFar = React.createClass({
+
+	 _addContribution: function(snowball,model) {
+	 	return snowball.concat([<Contribution model={model} />])
+
+	 },
+
 	 render: function() {
 	 	return (
 	 		<div className='story-so-far' >
-	 			<p>{this.props.contributions.reduce((snowball,model)=>snowball += ' ' + model.get('text'),'')}</p>
+	 			<p>{this.props.contributions.reduce(this._addContribution,[])}</p>
 	 		</div>
 	 	)
  	}
 })
 
+const Contribution = React.createClass({
+
+	getInitialState: function() {
+		return {
+			authorShowing: false,
+			authorLeft: 0,
+			authorBottom: 0
+		}
+	},
+
+	_showAuthor: function(e) {
+		this.setState({
+			authorShowing: true,
+			authorLeft: `${e.clientX}px`,
+			authorBottom: `${window.innerHeight - e.clientY}px`
+		})
+	},
+
+	_hideAuthor: function() {
+		this.setState({
+			authorShowing: false
+		})
+	},
+
+	 render: function() {
+	 	// display attribution on hover
+	 	var styleObj
+	 	if (this.state.authorShowing) {
+	 		styleObj = {
+	 			display: 'inline',
+	 			left: this.state.authorLeft,
+	 			bottom: this.state.authorBottom
+	 		}
+	 	}
+
+	 	else {
+	 		styleObj = {display: 'none'}
+	 	}
+
+	 	return (
+	 		<span onMouseEnter={this._showAuthor} onMouseMove={this._showAuthor} onMouseLeave={this._hideAuthor} className="contribution" style={{color: rainbowColor(this.props.model.get('index'),.6)}}> 
+	 			{this.props.model.get('text')} 
+	 			<span style={styleObj} className="attribution">{this.props.model.get('author')}</span>
+	 		</span>
+	 		)
+	 }
+})
 
 const ContributeForm = React.createClass({
 
@@ -45,7 +100,7 @@ const ContributeForm = React.createClass({
 			sketchId: this.props.sketchId,
 			text: e.target.text.value,
 			index: this.props.index,
-			author: e.target.author.value
+			author: e.target.author.value || 'anonipotamus'
 		}
 		ACTIONS.saveContribution(data)
 	},

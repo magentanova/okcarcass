@@ -129,3 +129,13 @@ nav.nav-bar {
 		width: 100%;
 	}
 }
+
+.contribution {
+	.attribution {
+		position: fixed;
+		color: $charcoal;
+		background: $offwhite;
+		border: 1px solid $charcoal;
+		padding: .5%;
+	}
+}
