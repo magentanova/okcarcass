@@ -55,6 +55,7 @@ const ACTIONS = {
 			})
 			co.save().then(function(resp) {
 				console.log(resp)
+				location.hash = "sketches"
 			})
 		},
 		function(err){
