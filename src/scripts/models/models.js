@@ -66,4 +66,24 @@ const User = UserAuthModel.extend({
 	}
 })
 
-export { User }
+const Sketch = Backbone.Model.extend({
+	urlRoot: '/api/sketches',
+	idAttribute: '_id'
+})
+
+const Sketches = Backbone.Collection.extend({
+	url: '/api/sketches',
+	model: Sketch
+})
+
+const Contribution = Backbone.Model.extend({
+	urlRoot: '/api/contributions',
+	idAttribute: '_id'
+})
+
+const Contributions = Backbone.Collection.extend({
+	url: '/api/contributions',
+	model: Contribution
+})
+
+export { User,Sketch,Sketches,Contribution,Contributions }

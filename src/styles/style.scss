@@ -1,3 +1,5 @@
+@import '../../node_modules/margo-css/margo.scss';
+
 * {
 	font-family: Helvetica, Arial, sans-serif;
 	box-sizing: border-box;
@@ -7,4 +9,123 @@ h1 {
 	font-size: 300px;
 	text-align: center;
 	color: fuchsia;
+}
+
+a {
+	text-decoration: none;
+}
+
+textarea {
+	resize: none;
+	margin-left: -.75%;
+}
+$charcoal: #333;
+$offwhite: #f6f6f6;
+
+html {
+	background: $offwhite;
+}
+
+nav.nav-bar {
+	height: 80px;
+}
+
+.container-full {
+
+	@media (min-width:1000px) {
+		height: 100vh;
+		position: relative;
+	} 
+}
+
+
+.sketches {
+	text-align: center;
+	padding: 0 5%;
+
+	@media (min-width:1000px) {
+		// position: absolute;
+		// width: 100%;
+		// top: 50%;
+		// left: 50%;
+		// transform: translate(-50%,-50%)
+	} 
+	.timer-item {
+		position: relative;
+		p {
+			font-size: 48px;
+			color: $charcoal;
+			white-space: pre-wrap;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%,-50%);
+			margin:0;
+		}
+		border: 5px solid $charcoal;
+		margin-top: 2%;
+		height: 40vh;
+	}
+	.timer-item:hover {
+		background: $charcoal;
+		p {
+			color: $offwhite;
+		}
+	}
+}
+
+.sketches-by-time {
+	padding: 10%;
+
+	.sketch-link {
+		margin-top: 2rem;
+		color: $charcoal;
+		display: block;
+
+		.votes {
+			background: rgba(255, 184, 0,.5);
+			border-radius: 13%;
+			line-height: 22px;
+			font-size: 22px;
+			padding: 0.4rem;
+			margin: 0rem 1rem;
+			text-align: center;	
+		}
+
+	}
+}
+
+.sketch-creator, .sketch-contribution {
+	max-width: 900px;
+	margin: auto;
+	padding: 0 40px;
+}
+
+.timer {
+	text-align: center;
+	max-width: 700px;
+	margin: 0 auto;
+	.total-time {
+		position: relative;
+		height: 30px;
+		width: 100%;
+		border: 2px solid $charcoal;
+		margin-bottom: 3%;
+
+		.elapsed-time {
+			position: absolute;
+			top: -2px;
+			left:0;
+			height:30px;
+			background: $charcoal;
+			transition: 1s all linear;
+		}
+	}
+}
+
+.write-form {
+	width: 100%;
+	.form-field {
+		width: 100%;
+	}
 }
