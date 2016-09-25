@@ -72,6 +72,7 @@ const ACTIONS = {
 	},
 
 	unalert: function() {
+		// change hash depending on the alert that was closed
 		if (['sketchCreated','contributionMade'].contains(STORE.get('alertStatus'))) {
 			setTimeout(()=>location.hash = "sketches",500)
 		}
