@@ -1,7 +1,8 @@
 import React from 'react'
+import ACTIONS from '../actions'
+import OKAlert from './OKAlert'
 import Timer from './timer'
 import WriteForm from './writeForm'
-import ACTIONS from '../actions'
 
 
 const SketchCreator = React.createClass({
@@ -10,6 +11,7 @@ const SketchCreator = React.createClass({
 	 		<div className="sketch-creator" >
 	 			<Timer timerVal={this.props.timerVal} />
 	 			<SketchCreatorForm timesUp={this.props.timesUp} timerVal={this.props.timerVal}/>
+	 			<OKAlert alertStatus={this.props.alertStatus} />
 	 		</div>
 	 	)
  	}

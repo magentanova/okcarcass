@@ -3,6 +3,7 @@ import ACTIONS from '../actions'
 import {rainbowColor} from '../utils'
 import Timer from './timer'
 import WriteForm from './writeForm'
+import OKAlert from './OKAlert'
 
 
 const SketchContribution = React.createClass({
@@ -22,6 +23,7 @@ const SketchContribution = React.createClass({
 				{timer}
 				<StorySoFar contributions={this.props.contributions} />
 				<ContributeForm timesUp={this.props.timesUp} index={this.props.contributions.models.length} sketchId={this.props.sketchId} />
+				<OKAlert alertStatus={this.props.alertStatus} />
 			</div>
 		)
 	}
@@ -31,7 +33,7 @@ const SketchContribution = React.createClass({
 const StorySoFar = React.createClass({
 
 	 _addContribution: function(snowball,model) {
-	 	return snowball.concat([<Contribution model={model} />])
+	 	return snowball.concat([<Contribution key={model.cid} model={model} />])
 
 	 },
 

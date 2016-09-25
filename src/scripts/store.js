@@ -4,6 +4,7 @@ import {Sketches,Sketch,Contributions,Contribution} from './models/models'
 
 const STORE = _.extend({},Backbone.Events,{
 	data: {
+		alertStatus: null,
 		sketches: new Sketches(),
 		sketch: new Sketch(),
 		contributions: new Contributions(),

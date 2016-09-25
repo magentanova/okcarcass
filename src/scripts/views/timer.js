@@ -12,7 +12,6 @@ const Timer = React.createClass({
 	},
 
 	componentWillMount: function() {
-		console.log('props receiv ed')
 		this.mounted = true
 
 		ACTIONS.clearTimer()
@@ -22,7 +21,7 @@ const Timer = React.createClass({
 		if (timeUnits === 'mins') {
 			timeVal = timeVal * 60
 		}
-		this.totalTime = timeVal * 1000
+		this.totalTime = 3 * 1000
 		this.initialTime = new Date()
 
 		var updateBar = () => {
@@ -35,7 +34,6 @@ const Timer = React.createClass({
 				setTimeout(updateBar,1000)
 			}
 			else {
-				alert("time is up! you can now vote on this sketch, and sign your contribution if you'd like.")
 				ACTIONS.timesUp()
 				this.setState({
 					elapsedTime: 0

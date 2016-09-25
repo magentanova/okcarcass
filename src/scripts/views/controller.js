@@ -31,16 +31,16 @@ const ControllerView = React.createClass({
 		var component
 		switch (this.props.view) {
 			case "sketches": 
-				component = <Sketches {...this.props} />
+				component = <Sketches {...this.props} {...this.state} />
 				break
 			case "sketchesByTime": 
-				component = <SketchesByTime {...this.props} sketches={this.state.sketches} />
+				component = <SketchesByTime {...this.props} {...this.state} />
 				break
 			case "createSketch": 
-				component = <SketchCreator {...this.props} timesUp={this.state.timesUp} />
+				component = <SketchCreator {...this.props} {...this.state} />
 				break
 			case "contributeToSketch":
-				component = <SketchContribution {...this.props} timesUp={this.state.timesUp} sketch={this.state.sketch} contributions={this.state.contributions} />
+				component = <SketchContribution {...this.props} {...this.state} />
 				break
 		}
 		return (

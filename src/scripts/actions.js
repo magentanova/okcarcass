@@ -1,7 +1,8 @@
 import {Sketches,Sketch,Contributions,Contribution} from './models/models'
 import STORE from './store'
-const ACTIONS = {
 
+
+const ACTIONS = {
 	deleteSketch: function(sketchId) {
 		STORE.get('sketches').get(sketchId).destroy().then(
 			function() {
@@ -35,8 +36,7 @@ const ACTIONS = {
 		return c.save().then(function(resp) {
 			console.log(resp)
 			ACTIONS.fetchContributions({sketchId: contributionData.sketchId})
-			alert('contribution saved!')
-			location.hash = "sketches"
+			STORE.set('alertStatus','contributionMade')
 		})
 	},
 
@@ -54,8 +54,7 @@ const ACTIONS = {
 				index: 0
 			})
 			co.save().then(function(resp) {
-				console.log(resp)
-				location.hash = "sketches"
+				STORE.set('alertStatus','sketchCreated')
 			})
 		},
 		function(err){
@@ -68,7 +67,15 @@ const ACTIONS = {
 	},
 
 	timesUp: function() {
+		STORE.set('alertStatus','timesUp')
 		STORE.set('timesUp',true)
+	},
+
+	unalert: function() {
+		if (['sketchCreated','contributionMade'].contains(STORE.get('alertStatus'))) {
+			setTimeout(()=>location.hash = "sketches",500)
+		}
+		STORE.set('alertStatus',null)
 	}
 }
 

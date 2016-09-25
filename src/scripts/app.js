@@ -4,6 +4,9 @@ import Backbone from 'backbone'
 import ControllerView from './views/controller'
 import init from './init'
 
+Array.prototype.contains = function(el) {
+	return this.indexOf(el) !== -1
+}
 
 const app = function() {
 	const Rtr = Backbone.Router.extend({
