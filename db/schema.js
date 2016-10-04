@@ -17,6 +17,21 @@ const usersSchema = new Schema({
 
 })
 
+const sketchSchema = new Schema({
+	title: {type: String},
+	votes: {type: Number, default: 0},
+	timerVal: {type: String, required: true}
+})
+
+const contributionSchema = new Schema({
+	index: {type: Number, required: true},
+	text: {type: String, required: true},
+	author: {type: String, default: 'anonippotamus'},
+	sketchId: {type: String, required:true}
+})
+
 module.exports = {
-  User: createModel('User', usersSchema)
+  User: createModel('User', usersSchema),
+  Sketch: createModel('Sketch',sketchSchema),
+  Contribution: createModel('Contribution',contributionSchema)
 }
