@@ -5,6 +5,10 @@ import STORE from './store'
 
 const ACTIONS = {
 
+	clearContributeStates: function() {
+		STORE.set('voteAction','')
+	},
+
 	clearTimer: function() {
 		STORE.set('timesUp',false)
 	},

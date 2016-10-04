@@ -9,6 +9,7 @@ import OKAlert from './OKAlert'
 const SketchContribution = React.createClass({
 
 	componentWillMount: function() {
+		ACTIONS.clearContributeStates()
 		ACTIONS.fetchSketchById(this.props.sketchId)
 		ACTIONS.fetchContributions({sketchId: this.props.sketchId})
 	},
@@ -27,7 +28,10 @@ const SketchContribution = React.createClass({
 					contributions={this.props.contributions} 
 					voteAction={this.props.voteAction}
 					/>
-				<ContributeForm timesUp={this.props.timesUp} index={this.props.contributions.models.length} sketchId={this.props.sketchId} />
+				<ContributeForm 
+					timesUp={this.props.timesUp} 
+					index={this.props.contributions.models.length} 
+					sketch={this.props.sketch} />
 				<OKAlert alertStatus={this.props.alertStatus} />
 			</div>
 		)
@@ -48,7 +52,7 @@ const StorySoFar = React.createClass({
 		 			{this.props.contributions.reduce(this._addContribution,[])}
 		 			{this.props.timesUp ? <strong> {this.props.currentContributionText}</strong> : ''}
 	 			</p>
-	 			<VoteButtons voteAction={this.props.voteAction} />
+	 			<VoteButtons timesUp={this.props.timesUp} voteAction={this.props.voteAction} />
 	 		</div>
 	 	)
  	}
@@ -61,8 +65,9 @@ const VoteButtons = React.createClass({
 	},
 
 	render: function() {
+		var styleObj = {visibility: this.props.timesUp ? 'visible': 'hidden'}
 		return (
- 			<div onClick={this._vote} className={'vote-buttons ' + this.props.voteAction}>
+ 			<div style={styleObj} onClick={this._vote} className={'vote-buttons ' + this.props.voteAction}>
  				<i title="upvote" className="fa fa-arrow-up upvote" aria-hidden="true"></i>
  				<i title="abstain" className="fa fa-circle abstain" aria-hidden="true"></i>
 				<i title="downvote" className="fa fa-arrow-down downvote" aria-hidden="true"></i>
@@ -129,27 +134,59 @@ const Contribution = React.createClass({
 
 const ContributeForm = React.createClass({
 
+	getInitialState: function() {
+		return {
+			alertStatus: null
+		}
+	},
+
 	_contribute: function(e) {
 		e.preventDefault()
 		var data = {
-			sketchId: this.props.sketchId,
+			sketchId: this.props.sketch.get('_id'),
 			text: e.target.text.value,
 			index: this.props.index,
 			author: e.target.author.value || 'anonipotamus'
 		}
-		ACTIONS.saveContribution(data)
+		if (!this._validateSubmission(data)) {
+			console.log(this._getVoteVal())
+			ACTIONS.saveContribution(data)
+		}
 	},
 
-	 render: function() {
+	_getVoteVal: function() {
+		var votes = this.props.sketch.get('votes')
+		console.log(this.props.voteAction)
+		if (this.props.voteAction === 'upvote') votes += 1
+		if (this.props.voteAction === 'downvote') votes -= 1
+		return votes
+	},
 
-	 	var styleObj = {'display': 'none'}
-	 	if (this.props.timesUp) {
-	 		styleObj.display = 'block'
-	 	}
+	_validateSubmission: function(data) {
+		if (!this.props.voteAction) {
+			this.setState({
+				alertStatus: 'noVote'
+			})
+			return false
+		}
+		else if (!data.text) {
+			this.setState({
+				alertStatus: 'noText'
+			})
+			return false
+		}
+		return true
+	},
+	
+	 render: function() {
+	 	// toggle alert box based on local state
+	 	var alertStyle = {display: 'none'}
+	 	if (this.state.alertStatus) alertStyle.display = 'block'
 	 	return (
 	 		<div className='contribute-form' >
 	 			<form onSubmit={this._contribute} className="form-group grid-container">
 	 				<WriteForm timesUp={this.props.timesUp} />
+	 				<OKAlert style={alertStyle} alertStatus={this.state.alertStatus} />
 	 			</form>
 	 		</div>
 	 	)

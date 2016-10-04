@@ -22,6 +22,7 @@ textarea {
 }
 $charcoal: #333;
 $offwhite: #f6f6f6;
+$gold: rgba(255, 184, 0,.5);
 
 html {
 	background: $offwhite;
@@ -84,7 +85,7 @@ nav.nav-bar {
 		display: block;
 
 		.votes {
-			background: rgba(255, 184, 0,.5);
+			background: $gold;
 			border-radius: 13%;
 			line-height: 22px;
 			font-size: 22px;
@@ -139,14 +140,34 @@ nav.nav-bar {
 			background: $offwhite;
 			border: 1px solid $charcoal;
 			padding: .5%;
+			z-index: 1;
 		}
 	}
-	.vote-buttons {
-		i {
-			display: block;
+	.story-so-far {
+		position: relative;
+
+		.vote-buttons {
+			position: absolute;
+			right: -5%;
+			bottom: 0;
+			width: 52px;
+			text-align: center;
+			i {
+				display: block;
+				background: white;
+				border-radius: 50%;
+				width: 36px;
+				height: 36px;
+				line-height: 36px;
+				margin: 10px;		
+			}
+			i:last-child {
+				margin-bottom: 0;
+			}
 		}
-	}
-	.vote-buttons.abstain i.abstain,.vote-buttons.upvote i.upvote,.vote-buttons.downvote i.downvote,  {
-		font-weight: 900;
+		.vote-buttons.abstain i.abstain,.vote-buttons.upvote i.upvote,.vote-buttons.downvote i.downvote {
+			background: $gold;
+		}
+
 	}
 }
