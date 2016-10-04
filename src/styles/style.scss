@@ -131,12 +131,22 @@ nav.nav-bar {
 	}
 }
 
-.contribution {
-	.attribution {
-		position: fixed;
-		color: $charcoal;
-		background: $offwhite;
-		border: 1px solid $charcoal;
-		padding: .5%;
+.sketch-contribution {
+	.contribution {
+		.attribution {
+			position: fixed;
+			color: $charcoal;
+			background: $offwhite;
+			border: 1px solid $charcoal;
+			padding: .5%;
+		}
+	}
+	.vote-buttons {
+		i {
+			display: block;
+		}
+	}
+	.vote-buttons.abstain i.abstain,.vote-buttons.upvote i.upvote,.vote-buttons.downvote i.downvote,  {
+		font-weight: 900;
 	}
 }

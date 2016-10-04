@@ -1,38 +1,33 @@
+import Backbone from 'backbone'
 import React from 'react'
 import ACTIONS from '../actions'
 
 const WriteForm = React.createClass({
 
-	_contribute: function(e) {
-		var data = {
-			sketchId: this.props.sketchId,
-			text: e.target.text.value,
-			index: this.props.index,
-			author: e.target.author.value
-		}
-		ACTIONS.saveContribution(data)
+	componentWillMount: function() {
+		Backbone.Events.on('timesUp',()=>ACTIONS.setContributionText(this.refs.writings.value))
 	},
 
 	 render: function() {
-	 	var styleObj = {'display': 'none'},
-	 		val = undefined
+	 	var submittingStyle = {'display': 'none'},
+	 		contributeFieldStyle = {display: 'block'}
 	 	if (this.props.timesUp) {
-	 		styleObj.display = 'block'
-	 		val = this.refs.writings.value
+	 		submittingStyle.display = 'block'
+	 		contributeFieldStyle = {display: 'none'}
 	 	}
 	 	return (
 		    <div className="write-form">
-			   <div className="form-field sm-12-x-12 md-12-x-12 lg-12-x-12">
+			   <div style={contributeFieldStyle} className="form-field sm-12-x-12 md-12-x-12 lg-12-x-12">
 			       <label>your contribution</label>
-			       <textarea value={val} ref="writings" name="text" rows="15"/>
+			       <textarea ref="writings" name="text" rows="15"/>
 			   </div>
 			   <br/>
-			   <div style={styleObj} className="form-field">
+			   <div style={submittingStyle} className="form-field">
 			       <label>signed (optional)</label>
 			       <input name="author" type="text"/>
 			   </div>
 			   <br/>
-			   <div style={styleObj} className="form-field">
+			   <div style={submittingStyle} className="form-field">
 			       <input type="submit" className="btn" />
 			   </div>
 			</div>

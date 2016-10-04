@@ -21,7 +21,12 @@ const SketchContribution = React.createClass({
 			<div className="sketch-contribution" >
 				<h3>{this.props.sketch.get('title')}</h3>
 				{timer}
-				<StorySoFar contributions={this.props.contributions} />
+				<StorySoFar 
+					currentContributionText={this.props.currentContributionText} 
+					timesUp={this.props.timesUp} 
+					contributions={this.props.contributions} 
+					voteAction={this.props.voteAction}
+					/>
 				<ContributeForm timesUp={this.props.timesUp} index={this.props.contributions.models.length} sketchId={this.props.sketchId} />
 				<OKAlert alertStatus={this.props.alertStatus} />
 			</div>
@@ -34,16 +39,36 @@ const StorySoFar = React.createClass({
 
 	 _addContribution: function(snowball,model) {
 	 	return snowball.concat([<Contribution key={model.cid} model={model} />])
-
 	 },
 
 	 render: function() {
 	 	return (
 	 		<div className='story-so-far' >
-	 			<p>{this.props.contributions.reduce(this._addContribution,[])}</p>
+	 			<p>
+		 			{this.props.contributions.reduce(this._addContribution,[])}
+		 			{this.props.timesUp ? <strong> {this.props.currentContributionText}</strong> : ''}
+	 			</p>
+	 			<VoteButtons voteAction={this.props.voteAction} />
 	 		</div>
 	 	)
  	}
+})
+
+const VoteButtons = React.createClass({
+
+	_vote: function(e) {
+		ACTIONS.setVote(e.target.title)
+	},
+
+	render: function() {
+		return (
+ 			<div onClick={this._vote} className={'vote-buttons ' + this.props.voteAction}>
+ 				<i title="upvote" className="fa fa-arrow-up upvote" aria-hidden="true"></i>
+ 				<i title="abstain" className="fa fa-circle abstain" aria-hidden="true"></i>
+				<i title="downvote" className="fa fa-arrow-down downvote" aria-hidden="true"></i>
+ 			</div>
+			)
+	}
 })
 
 const Contribution = React.createClass({
@@ -130,5 +155,7 @@ const ContributeForm = React.createClass({
 	 	)
  	}
 })
+
+
 
 export default SketchContribution

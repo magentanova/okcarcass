@@ -1,8 +1,14 @@
+import Backbone from 'backbone'
 import {Sketches,Sketch,Contributions,Contribution} from './models/models'
 import STORE from './store'
 
 
 const ACTIONS = {
+
+	clearTimer: function() {
+		STORE.set('timesUp',false)
+	},
+
 	deleteSketch: function(sketchId) {
 		STORE.get('sketches').get(sketchId).destroy().then(
 			function() {
@@ -40,6 +46,14 @@ const ACTIONS = {
 		})
 	},
 
+	setContributionText: function(txt) {
+		STORE.set('currentContributionText',txt)
+	},
+
+	setVote: function(voteAction) {
+		STORE.set('voteAction', voteAction)
+	},
+
 	startSketch: function(sketchData) {
 		var sk = new Sketch({
 			title: sketchData.title,
@@ -62,11 +76,8 @@ const ACTIONS = {
 		})
 	},
 
-	clearTimer: function() {
-		STORE.set('timesUp',false)
-	},
-
 	timesUp: function() {
+		Backbone.Events.trigger('timesUp')
 		STORE.set('alertStatus','timesUp')
 		STORE.set('timesUp',true)
 	},

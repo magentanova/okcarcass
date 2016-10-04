@@ -8,7 +8,9 @@ const STORE = _.extend({},Backbone.Events,{
 		sketches: new Sketches(),
 		sketch: new Sketch(),
 		contributions: new Contributions(),
-		timesUp: false
+		timesUp: false,
+		currentContributionText: '',
+		voteAction: ''
 	},
 
 	emitChange: function() {
