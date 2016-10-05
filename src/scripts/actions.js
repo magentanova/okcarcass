@@ -4,9 +4,14 @@ import STORE from './store'
 
 
 const ACTIONS = {
+	alert: function(alertStatus) {
+		STORE.set('alertStatus',alertStatus)
+	},
 
 	clearContributeStates: function() {
 		STORE.set('voteAction','')
+		STORE.set('timesUp',false)
+		STORE.set('currentContributionText','')
 	},
 
 	clearTimer: function() {
@@ -43,10 +48,10 @@ const ACTIONS = {
 
 	saveContribution: function(contributionData) {
 		var c = new Contribution(contributionData)
-		return c.save().then(function(resp) {
+		return c.save().then((resp) => {
 			console.log(resp)
-			ACTIONS.fetchContributions({sketchId: contributionData.sketchId})
-			STORE.set('alertStatus','contributionMade')
+			this.fetchContributions({sketchId: contributionData.sketchId})
+			this.alert('contributionMade')
 		})
 	},
 
@@ -64,15 +69,14 @@ const ACTIONS = {
 			timerVal: sketchData.timerVal
 		})
 		return sk.save().then(function(resp){
-			console.log(resp)
 			var co = new Contribution({
 				sketchId: resp._id,
 				text: sketchData.text,
 				author: sketchData.author,
 				index: 0
 			})
-			co.save().then(function(resp) {
-				STORE.set('alertStatus','sketchCreated')
+			co.save().then((resp) => {
+				this.alert('sketchCreated')
 			})
 		},
 		function(err){
@@ -81,8 +85,7 @@ const ACTIONS = {
 	},
 
 	timesUp: function() {
-		Backbone.Events.trigger('timesUp')
-		STORE.set('alertStatus','timesUp')
+		this.alert('timesUp')
 		STORE.set('timesUp',true)
 	},
 
@@ -91,7 +94,14 @@ const ACTIONS = {
 		if (['sketchCreated','contributionMade'].contains(STORE.get('alertStatus'))) {
 			setTimeout(()=>location.hash = "sketches",500)
 		}
-		STORE.set('alertStatus',null)
+		this.alert(null)
+	},
+
+	updateSketch: function(sketch,data) {
+		sketch.set(data)
+		sketch.save().then(function() {
+			STORE.emitChange()
+		})
 	}
 }
 

@@ -29,6 +29,7 @@ const SketchContribution = React.createClass({
 					voteAction={this.props.voteAction}
 					/>
 				<ContributeForm 
+					voteAction={this.props.voteAction}
 					timesUp={this.props.timesUp} 
 					index={this.props.contributions.models.length} 
 					sketch={this.props.sketch} />
@@ -125,7 +126,7 @@ const Contribution = React.createClass({
 	 			className="contribution" 
 	 			style={{color: rainbowColor(this.props.model.get('index'),.6,this.randomSeed)}}
 	 			> 
-	 			{this.props.model.get('text')} 
+	 			{' ' + this.props.model.get('text')} 
 	 			<span style={styleObj} className="attribution">{this.props.model.get('author')}</span>
 	 		</span>
 	 		)
@@ -148,15 +149,16 @@ const ContributeForm = React.createClass({
 			index: this.props.index,
 			author: e.target.author.value || 'anonipotamus'
 		}
-		if (!this._validateSubmission(data)) {
-			console.log(this._getVoteVal())
+		if (this._validateSubmission(data)) {
+			var votes = this._getVoteVal()
+			// if there was an upvote or a downvote, update the sketch's vote total
+			if (votes) ACTIONS.updateSketch(this.props.sketch,{votes: votes})
 			ACTIONS.saveContribution(data)
 		}
 	},
 
 	_getVoteVal: function() {
 		var votes = this.props.sketch.get('votes')
-		console.log(this.props.voteAction)
 		if (this.props.voteAction === 'upvote') votes += 1
 		if (this.props.voteAction === 'downvote') votes -= 1
 		return votes
@@ -164,15 +166,12 @@ const ContributeForm = React.createClass({
 
 	_validateSubmission: function(data) {
 		if (!this.props.voteAction) {
-			this.setState({
-				alertStatus: 'noVote'
-			})
+			console.log('no vote!')
+			ACTIONS.alert('noVote')
 			return false
 		}
 		else if (!data.text) {
-			this.setState({
-				alertStatus: 'noText'
-			})
+			ACTIONS.alert('noText')
 			return false
 		}
 		return true
@@ -181,12 +180,10 @@ const ContributeForm = React.createClass({
 	 render: function() {
 	 	// toggle alert box based on local state
 	 	var alertStyle = {display: 'none'}
-	 	if (this.state.alertStatus) alertStyle.display = 'block'
 	 	return (
 	 		<div className='contribute-form' >
 	 			<form onSubmit={this._contribute} className="form-group grid-container">
 	 				<WriteForm timesUp={this.props.timesUp} />
-	 				<OKAlert style={alertStyle} alertStatus={this.state.alertStatus} />
 	 			</form>
 	 		</div>
 	 	)

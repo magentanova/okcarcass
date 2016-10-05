@@ -4,12 +4,24 @@ import ACTIONS from '../actions'
 
 const WriteForm = React.createClass({
 
-	componentWillMount: function() {
-		Backbone.Events.on('timesUp',()=>ACTIONS.setContributionText(this.refs.writings.value))
+	componentWillReceiveProps: function(props) {
+		if (this.props.timesUp !== props.timesUp) { //if this is the first time the time has elapsed
+			var txt = this._textarea ? this._textarea.value : this._backupTextarea.value
+			console.log(this)
+			if (props.timesUp) {
+				ACTIONS.setContributionText(txt)
+			}
+		}
+	},
+
+	componentWillUnmount: function() {
+		if (this._textarea) {
+			this._backupTextarea = this._textarea
+		}
 	},
 
 	 render: function() {
-	 	var submittingStyle = {'display': 'none'},
+	 	var submittingStyle = {display: 'none'},
 	 		contributeFieldStyle = {display: 'block'}
 	 	if (this.props.timesUp) {
 	 		submittingStyle.display = 'block'
@@ -19,7 +31,7 @@ const WriteForm = React.createClass({
 		    <div className="write-form">
 			   <div style={contributeFieldStyle} className="form-field sm-12-x-12 md-12-x-12 lg-12-x-12">
 			       <label>your contribution</label>
-			       <textarea ref="writings" name="text" rows="15"/>
+			       <textarea ref={(txtarea)=>this._textarea = txtarea} name="text" rows="15"/>
 			   </div>
 			   <br/>
 			   <div style={submittingStyle} className="form-field">
