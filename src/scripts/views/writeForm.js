@@ -7,7 +7,6 @@ const WriteForm = React.createClass({
 	componentWillReceiveProps: function(props) {
 		if (this.props.timesUp !== props.timesUp) { //if this is the first time the time has elapsed
 			var txt = this._textarea ? this._textarea.value : this._backupTextarea.value
-			console.log(this)
 			if (props.timesUp) {
 				ACTIONS.setContributionText(txt)
 			}

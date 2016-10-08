@@ -13,7 +13,6 @@ const OKAlert = React.createClass({
 
 	render: function() {
 		var opts = {display:'block',title:'no title'}
-		console.log(this.props.alertStatus)
 		switch (this.props.alertStatus) {
 			case 'timesUp':
 				opts.title = "time's up!"

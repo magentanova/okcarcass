@@ -8,12 +8,6 @@ const ACTIONS = {
 		STORE.set('alertStatus',alertStatus)
 	},
 
-	clearContributeStates: function() {
-		STORE.set('voteAction','')
-		STORE.set('timesUp',false)
-		STORE.set('currentContributionText','')
-	},
-
 	clearTimer: function() {
 		STORE.set('timesUp',false)
 	},
@@ -46,6 +40,10 @@ const ACTIONS = {
 		})
 	},
 
+	resetStore: function() {
+		STORE.reset()
+	},
+
 	saveContribution: function(contributionData) {
 		var c = new Contribution(contributionData)
 		return c.save().then(() => {
@@ -67,7 +65,7 @@ const ACTIONS = {
 			title: sketchData.title,
 			timerVal: sketchData.timerVal
 		})
-		return sk.save().then(function(resp){
+		return sk.save().then((resp) => {
 			var co = new Contribution({
 				sketchId: resp._id,
 				text: sketchData.text,
@@ -78,7 +76,7 @@ const ACTIONS = {
 				this.alert('sketchCreated')
 			})
 		},
-		function(err){
+		(err) => {
 			console.log(err)
 		})
 	},

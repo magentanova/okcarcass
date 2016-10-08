@@ -3,13 +3,19 @@ import ACTIONS from '../actions'
 import OKAlert from './OKAlert'
 import Timer from './timer'
 import WriteForm from './writeForm'
-
+import StorySoFar from './storySoFar'
 
 const SketchCreator = React.createClass({
 	 render: function() {
 	 	return (
 	 		<div className="sketch-creator" >
-	 			<Timer timerVal={this.props.timerVal} />
+	 			<Timer test={this.props.test} timerVal={this.props.timerVal} />
+	 			<StorySoFar 
+	 				currentContributionText={this.props.currentContributionText} 
+	 				timesUp={this.props.timesUp} 
+	 				contributions={this.props.contributions} 
+	 				voteAction={this.props.voteAction}
+	 				/>
 	 			<SketchCreatorForm timesUp={this.props.timesUp} timerVal={this.props.timerVal}/>
 	 			<OKAlert alertStatus={this.props.alertStatus} />
 	 		</div>
@@ -27,8 +33,17 @@ const SketchCreatorForm = React.createClass({
 	 		title: e.target.title.value ? e.target.title.value : e.target.text.value.split(' ').slice(0,5).join(' '),
 	 		timerVal: this.props.timerVal	
 	 	}
-	 	console.log(this.props.timerVal)
-	 	ACTIONS.startSketch(sketchData)
+	 	if (this._validateSubmission(sketchData)) {
+	 		ACTIONS.startSketch(sketchData)
+	 	}
+	 },
+
+	 _validateSubmission: function(data) {
+	 	if (!data.text) {
+	 		ACTIONS.alert('noText')
+	 		return false
+	 	}
+	 	return true
 	 },
 
 	 render: function() {

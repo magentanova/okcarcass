@@ -22,7 +22,7 @@ const Timer = React.createClass({
 			timeVal = timeVal * 60
 		}
 		this.totalTime = timeVal * 1000
-		// this.totalTime = 3 * 1000
+		if (this.props.test) this.totalTime = 3 * 1000
 		this.initialTime = new Date()
 
 		var updateBar = () => {

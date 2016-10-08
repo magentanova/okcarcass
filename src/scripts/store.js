@@ -4,7 +4,17 @@ import {Sketches,Sketch,Contributions,Contribution} from './models/models'
 
 const STORE = _.extend({},Backbone.Events,{
 	data: {
-		alertStatus: null,
+		alertStatus: '',
+		sketches: new Sketches(),
+		sketch: new Sketch(),
+		contributions: new Contributions(),
+		timesUp: false,
+		currentContributionText: '',
+		voteAction: ''
+	},
+
+	data_defaults: {
+		alertStatus: '',
 		sketches: new Sketches(),
 		sketch: new Sketch(),
 		contributions: new Contributions(),
@@ -30,8 +40,23 @@ const STORE = _.extend({},Backbone.Events,{
 		return _.clone(this.data)
 	},
 
+	reset: function() {
+		for (var prop in this.data) {
+			this.data[prop] = this.data_defaults[prop]
+		}
+		this.emitChange()
+	},
+
 	set: function(key,val) {
-		this.data[key] = val
+		if (typeof key === 'object') {
+			let settingsObj = key
+			for (var prop in settingsObj) {
+				this.data[prop] = settingsObj[prop]
+			}
+		}
+		else {
+			this.data[key] = val
+		}
 		this.emitChange()
 	}
 })

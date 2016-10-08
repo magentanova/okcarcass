@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import Backbone from 'backbone'
 import ControllerView from './views/controller'
 import init from './init'
+import ACTIONS from './actions'
 
 Array.prototype.contains = function(el) {
 	return this.indexOf(el) !== -1
@@ -16,6 +17,8 @@ const app = function() {
 			"timedSketches/:time": "showSketchesByTime",
 			"timedSketches/:time/create": "createSketch",
 			"timedSketches/:sketchId/contribute": "contributeToSketch",
+			"timedSketches/:time/create/test": "createSketchTest",
+			"timedSketches/:sketchId/contribute/test": "contributeToSketchTest",
 			"*default": "redirect"
 		},
 
@@ -27,6 +30,14 @@ const app = function() {
 			ReactDOM.render(<ControllerView view="contributeToSketch" sketchId={sketchId} />,document.querySelector('.container'))
 		},
 
+		createSketchTest: function(timerVal) {
+			ReactDOM.render(<ControllerView view="createSketch" timerVal={timerVal} test />,document.querySelector('.container'))
+		},
+
+		contributeToSketchTest: function(sketchId) {
+			ReactDOM.render(<ControllerView view="contributeToSketch" sketchId={sketchId} test />,document.querySelector('.container'))
+		},
+
 		redirect: function() {
 			location.hash = "sketches"
 		},
@@ -36,7 +47,7 @@ const app = function() {
 		},
 
 		showSketchesAdmin: function() {
-			ReactDOM.render(<ControllerView view="sketchesByTime" admin={true} timerVal='all' />,document.querySelector('.container'))
+			ReactDOM.render(<ControllerView view="sketchesByTime" timerVal='all' test />,document.querySelector('.container'))
 		},
 
 		showSketchesByTime: function(timerVal) {
@@ -45,6 +56,7 @@ const app = function() {
 
 		initialize: function() {
 			Backbone.history.start()
+			this.on('route',()=>ACTIONS.resetStore())
 		}
 	})
 
