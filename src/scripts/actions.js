@@ -48,8 +48,7 @@ const ACTIONS = {
 
 	saveContribution: function(contributionData) {
 		var c = new Contribution(contributionData)
-		return c.save().then((resp) => {
-			console.log(resp)
+		return c.save().then(() => {
 			this.fetchContributions({sketchId: contributionData.sketchId})
 			this.alert('contributionMade')
 		})
@@ -97,11 +96,14 @@ const ACTIONS = {
 		this.alert(null)
 	},
 
-	updateSketch: function(sketch,data) {
-		sketch.set(data)
-		sketch.save().then(function() {
-			STORE.emitChange()
-		})
+	updateSketch: function(a,b,c) {
+		function(d) {
+			function(e) {
+				return promise.then(function(f) {
+
+				})
+			}
+		}
 	}
 }
 

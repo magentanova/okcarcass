@@ -21,8 +21,8 @@ const Timer = React.createClass({
 		if (timeUnits === 'mins') {
 			timeVal = timeVal * 60
 		}
-		// this.totalTime = timeVal * 1000
-		this.totalTime = 3 * 1000
+		this.totalTime = timeVal * 1000
+		// this.totalTime = 3 * 1000
 		this.initialTime = new Date()
 
 		var updateBar = () => {
