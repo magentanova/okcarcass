@@ -96,14 +96,11 @@ const ACTIONS = {
 		this.alert(null)
 	},
 
-	updateSketch: function(a,b,c) {
-		function(d) {
-			function(e) {
-				return promise.then(function(f) {
-
-				})
-			}
-		}
+	updateSketch: function(sketch,data) {
+		sketch.set(data)
+		sketch.save().then(function() {
+			STORE.emitChange()
+		})
 	}
 }
 
