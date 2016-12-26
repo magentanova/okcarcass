@@ -29,15 +29,12 @@ const WriteForm = React.createClass({
 	 	return (
 		    <div className="write-form">
 			   <div style={contributeFieldStyle} className="form-field sm-12-x-12 md-12-x-12 lg-12-x-12">
-			       <label>your contribution</label>
 			       <textarea ref={(txtarea)=>this._textarea = txtarea} name="text" rows="15"/>
 			   </div>
-			   <br/>
 			   <div style={submittingStyle} className="form-field">
 			       <label>signed (optional)</label>
 			       <input name="author" type="text"/>
 			   </div>
-			   <br/>
 			   <div style={submittingStyle} className="form-field">
 			       <input type="submit" className="btn" />
 			   </div>

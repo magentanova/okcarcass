@@ -11,6 +11,7 @@ const StorySoFar = React.createClass({
 	 render: function() {
 	 	return (
 	 		<div className='story-so-far' >
+	 			<h4>the story so far</h4>
 	 			<p>
 		 			{this.props.contributions.reduce(this._addContribution,[])}
 		 			{this.props.timesUp ? <strong> {this.props.currentContributionText}</strong> : ''}
@@ -83,6 +84,7 @@ const Contribution = React.createClass({
 	 	else {
 	 		styleObj = {display: 'none'}
 	 	}
+
 
 	 	return (
 	 		<span 

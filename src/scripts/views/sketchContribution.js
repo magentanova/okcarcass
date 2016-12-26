@@ -29,6 +29,7 @@ const SketchContribution = React.createClass({
 					voteAction={this.props.voteAction}
 					/>
 				<ContributeForm 
+					timer={timer}
 					voteAction={this.props.voteAction}
 					timesUp={this.props.timesUp} 
 					index={this.props.contributions.models.length} 
@@ -89,6 +90,7 @@ const ContributeForm = React.createClass({
 	 	var alertStyle = {display: 'none'}
 	 	return (
 	 		<div className='contribute-form' >
+		       <h4>your contribution</h4>
 	 			<form onSubmit={this._contribute} className="form-group grid-container">
 	 				<WriteForm timesUp={this.props.timesUp} />
 	 			</form>

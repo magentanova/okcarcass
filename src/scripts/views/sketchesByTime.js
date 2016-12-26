@@ -1,5 +1,6 @@
 import React from 'react'
 import ACTIONS from '../actions'
+import {formatTimerVal} from '../utils'
 
 const SketchesByTime = React.createClass({
 
@@ -12,7 +13,8 @@ const SketchesByTime = React.createClass({
 	render: function() {
 		return (
 			<div className="sketches-by-time" >
-				<a href={`#timedSketches/${this.props.timerVal}/create`} className="btn primary">+</a>
+				<h3>sketches of {formatTimerVal(this.props.timerVal)}</h3>
+				<a href={`#timedSketches/${this.props.timerVal}/create`} className="hoverable btn primary">+</a>
 				<AllSketches admin={this.props.admin} sketches={this.props.sketches} />
 			</div>
 		)
@@ -43,8 +45,8 @@ const SketchLink = React.createClass({
 
 		return (
 			<div className="sketch-link">
-				<a href={`#timedSketches/${this.props.mod.get('_id')}/contribute`} >{this.props.mod.get('title')}</a>
-				<span className="votes" >{this.props.mod.get('votes') ? this.props.mod.get('votes') : 0} </span>
+				<a className="" href={`#timedSketches/${this.props.mod.get('_id')}/contribute`} >{this.props.mod.get('title')}</a>
+				<span className="votes" >{this.props.mod.get('votes') ? this.props.mod.get('votes') : 0} votes</span>
 				<button onClick={this._handleDelete} style={buttonStyle} className="btn danger">X</button> 
 			</div>
 			)

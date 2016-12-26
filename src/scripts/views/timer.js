@@ -1,5 +1,6 @@
 import React from 'react'
 import ACTIONS from '../actions'
+import {formatTimerVal} from '../utils'
 
 const Timer = React.createClass({
 	totalTime: 1,
@@ -55,7 +56,7 @@ const Timer = React.createClass({
 	 	var percentageWidth = this.state.elapsedTime / this.totalTime
 	 	return (
 	 		<div className="timer" >
-				<h3 className="timer-heading">{this.props.timerVal.replace('_',' ')}</h3>
+				{/*<h4 className="timer-heading">{formatTimerVal(this.props.timerVal)}</h4>*/}
 	 			<div className="total-time">
 		 			<div style={{width: percentageWidth * 100 + '%'}} className="elapsed-time"></div>
 	 			</div>

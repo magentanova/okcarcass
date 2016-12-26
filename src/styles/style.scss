@@ -1,174 +1,224 @@
-@import '../../node_modules/margo-css/margo.scss';
-@import '../../node_modules/react-bootstrap-sweetalert/lib/css/animations.scss';
+@import url('https://fonts.googleapis.com/css?family=Quattrocento+Sans|Taviraj');
+
+$lh: 1.5rem;
+$paperColor: #F8ECC2;
+$inkColor: #383b3e;
+$serifFont: "Taviraj";
+$sansFont: "Quattrocento Sans";
 
 * {
-	font-family: Helvetica, Arial, sans-serif;
 	box-sizing: border-box;
+	font-family: $sansFont;
+}
+
+html {
+	font-size: 18px;
+}
+
+body {
+	font-family: $sansFont;
+	line-height: $lh;
+	background: $paperColor;
+	color: $inkColor;
+	margin: 0;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: $serifFont;
+	text-align: center;
 }
 
 h1 {
-	font-size: 300px;
-	text-align: center;
-	color: fuchsia;
+	font-size: 3rem;
+	line-height: 3 * $lh;
+}
+
+h2 {
+	font-size: 2rem;
+	line-height: 2 * $lh;
+}
+
+h3 {
+	font-size: 1.5rem;
+}
+
+p,span,a,.lead {
+	font-size: 1rem;
 }
 
 a {
 	text-decoration: none;
+	color: $inkColor;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.btn, button, input[type="submit"], input[type="button"] {
+	background: $paperColor;
+	border: 1px solid $inkColor;
+	margin: 1rem 0;
+	padding: .5em;
+	min-width: 5em;
+	cursor: pointer;
+	text-decoration: none;
+	color: $inkColor;
+	display: inline-block;
+	text-align: center;
+}
+
+a {
+	color: $inkColor;
+	background: $paperColor;
+}
+a.hoverable:hover, button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+	background: $inkColor;
+	color: $paperColor;
 }
 
 textarea {
 	resize: none;
-	margin-left: -.75%;
-}
-$charcoal: #333;
-$offwhite: #f6f6f6;
-$gold: rgba(255, 184, 0,.5);
-
-html {
-	background: $offwhite;
+	width: 100%;
+	// padding: $lh 2 * $lh;	
+	padding: none;
+	background: $paperColor;
+	border: 1px solid rgba(48,48,48,1);
+	transition: .5s border ease;
 }
 
-nav.nav-bar {
-	height: 80px;
+textarea:focus, input:focus {
+	border: 1px solid rgba(48,48,48,.1);
+	outline: none;
 }
 
-.container-full {
-
-	@media (min-width:1000px) {
-		height: 100vh;
-		position: relative;
-	} 
-}
-
-
-.sketches {
-	text-align: center;
-	padding: 0 5%;
-
-	@media (min-width:1000px) {
-		// position: absolute;
-		// width: 100%;
-		// top: 50%;
-		// left: 50%;
-		// transform: translate(-50%,-50%)
-	} 
-	.timer-item {
-		position: relative;
-		p {
-			font-size: 48px;
-			color: $charcoal;
-			white-space: pre-wrap;
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%,-50%);
-			margin:0;
-		}
-		border: 5px solid $charcoal;
-		margin-top: 2%;
-		height: 40vh;
+.nav-bar {
+	border-bottom: 1px solid $inkColor;
+	margin-bottom: 3rem;
+	h1 {
+		border-bottom: 2rem;
 	}
-	.timer-item:hover {
-		background: $charcoal;
-		p {
-			color: $offwhite;
+	.nav-list {
+		a {
+			border: 1px solid #383b3e;
+			border-bottom: none;
+			margin: 0 2rem;
+			margin-left: 0;
+			padding: .5rem;
+			background: $inkColor;
+			color: $paperColor;
+			&:hover {
+				background: $paperColor;
+				color: $inkColor;
+			}
 		}
 	}
+}
+.container {
+	max-width: 38 * $lh;
+	margin: 0 auto;
+	padding: $lh;
+	padding-top: 0;
+	font-size: 0;
 }
 
 .sketches-by-time {
-	padding: 10%;
-
 	.sketch-link {
-		margin-top: 2rem;
-		color: $charcoal;
-		display: block;
+		a {
+			margin: .25rem;
+			margin-left: 0rem;
+			padding: .5rem;
+			border-bottom: 1px solid $inkColor;
+			transition: .5s all ease;
 
-		.votes {
-			background: $gold;
-			border-radius: 13%;
-			line-height: 22px;
-			font-size: 22px;
-			padding: 0.4rem;
-			margin: 0rem 1rem;
-			text-align: center;	
+			&:hover {
+				padding: .5rem 1rem;
+			}
 		}
-
 	}
 }
 
-.sketch-creator, .sketch-contribution {
-	max-width: 900px;
-	margin: auto;
-	padding: 0 40px;
-}
-
-.timer {
+.timer-item {
+	color: $inkColor;
+	display: inline-block;
+	background: $paperColor;
+	width: 33%;
 	text-align: center;
-	max-width: 700px;
-	margin: 0 auto;
+	p {
+		padding: 10px;
+		width: 75%;
+		border-bottom: 1px solid $inkColor;
+		transition: .5s all ease;
+		margin: 1rem auto;
+
+		&:hover {
+			width: 95%;
+		}
+	}
+}
+.timer {
+	font-size: 1rem;
+	text-align: center;
 	.total-time {
 		position: relative;
-		height: 30px;
-		width: 100%;
-		border: 2px solid $charcoal;
-		margin-bottom: 3%;
-
+		border: 1px solid $inkColor;
+		height: 1rem;
+		margin: auto;
+		width: 50%;
 		.elapsed-time {
 			position: absolute;
-			top: -2px;
-			left:0;
-			height:30px;
-			background: $charcoal;
+			left: 0;
+			top: 0;
+			height: 100%;
 			transition: 1s all linear;
+			background: $inkColor;
 		}
 	}
+
 }
 
-.write-form {
-	width: 100%;
-	.form-field {
-		width: 100%;
-	}
-}
-
-.sketch-contribution {
-	.contribution {
-		.attribution {
-			position: fixed;
-			color: $charcoal;
-			background: $offwhite;
-			border: 1px solid $charcoal;
-			padding: .5%;
-			z-index: 1;
-		}
-	}
+.contribute-form, .story-so-far {
+	display: inline-block;
+	padding: $lh;
+	width: 50%;
+	font-size: 1rem;
+	vertical-align: top;	
 }
 
 .story-so-far {
-	position: relative;
-
-	.vote-buttons {
-		position: absolute;
-		right: -5%;
-		bottom: 0;
-		width: 52px;
-		text-align: center;
-		i {
-			display: block;
+	p,span {
+		font-family: $serifFont;
+	}
+	span {
+		.attribution {
+			display: none;
+			position: fixed;
 			background: white;
-			border-radius: 50%;
-			width: 36px;
-			height: 36px;
-			line-height: 36px;
-			margin: 10px;		
-		}
-		i:last-child {
-			margin-bottom: 0;
+			border: 1px solid black;
+			z-index: 2;
+			padding: 1rem;
+			transform: translate(-50%,-15px);
+			cursor: none;
 		}
 	}
-	.vote-buttons.abstain i.abstain,.vote-buttons.upvote i.upvote,.vote-buttons.downvote i.downvote {
-		background: $gold;
+}
+.write-form {
+	label, input, textarea {
+		display: block;
+		font-size: 1rem;
+		line-height: $lh;
 	}
+}
 
+.vote-buttons {
+	position: fixed;
+	right: 15%;
+	bottom: 32%;
+	i {
+		display: block;
+		margin: 1rem 0;
+  		text-shadow: 1px 0 0 $inkColor, -1px 0 0 $inkColor, 0 1px 0 $inkColor, 0 -1px 0 $inkColor, 1px 1px $inkColor, -1px -1px 0 $inkColor, 1px -1px 0 $inkColor, -1px 1px 0 $inkColor;
+  		color: $paperColor;
+	}
+	&.upvote i.upvote, &.downvote i.downvote, &.abstain i.abstain {
+		color: $inkColor;
+	}
 }
